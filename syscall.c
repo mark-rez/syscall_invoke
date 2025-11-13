@@ -28,16 +28,14 @@ pid_t getpid_syscall(void)
 		// 32 bit version:
 		  "int $0x80"
 		: "=a"(res)
-		/* TODO: replace 0x0000 below with the syscall number
-		 *       or a symbolic constant. */
-		: "0"(SYSCALL_MASK | 0x0000)
+		// Source: https://gpages.juszkiewicz.com.pl/syscalls-table/syscalls.html
+		: "0"(SYSCALL_MASK | 20)
 #elif defined(__x86_64__)
 		// 64 bit version:
 		  "syscall"
 		: "=a"(res)
-		/* TODO: replace 0x0000 below with the syscall number
-		 *       or a symbolic constant. */
-		: "0"(SYSCALL_MASK | 0x0000)
+		// Source: https://gpages.juszkiewicz.com.pl/syscalls-table/syscalls.html
+		: "0"(SYSCALL_MASK | 39)
 		: "rcx", "r11"
 #elif defined(__ARM_ARCH_6__)
 		// found on Raspberry Pi 32bit Raspberry OS compatibility mode
@@ -45,19 +43,17 @@ pid_t getpid_syscall(void)
 		  "swi #0x00\n\t"
 		  "mov %0, r0"
 		: "=r"(res)
-		/* TODO: replace 0x0000 below with the syscall number
-		*       or a symbolic constant. */
-		: "0"(SYSCALL_MASK | 0x0000)
+		// Source: https://gpages.juszkiewicz.com.pl/syscalls-table/syscalls.html
+		: "0"(SYSCALL_MASK | 20)
 #elif defined(__aarch64__)
-		// found on APPLES M1 (and probably M2, other successors on ARM based) 
+		// found on APPLES M1 (and probably M2, other successors on ARM based)
 		// architecture (no matter if linux or apple system)
 		  "mov x16,%1\n"
 		  "svc #0x00\n"
 		  "mov %w0, w0"
 		: "=r"(res)
-		/* TODO: replace 0x0000 below with the syscall number
-		*       or a symbolic constant. */
-		: "0"(SYSCALL_MASK | 0x0000)
+		// Source: https://gpages.juszkiewicz.com.pl/syscalls-table/syscalls.html
+		: "0"(SYSCALL_MASK | 172)
 #else
 #error Unsupported Architecture. Send a PR to add support!
 #endif
