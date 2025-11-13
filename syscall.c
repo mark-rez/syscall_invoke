@@ -53,7 +53,7 @@ pid_t getpid_syscall(void)
 		  "mov %w0, w0"
 		: "=r"(res)
 		// Source: https://gpages.juszkiewicz.com.pl/syscalls-table/syscalls.html
-		: "0"(SYSCALL_MASK | 172)
+		: "0"(SYSCALL_MASK | 20)
 #else
 #error Unsupported Architecture. Send a PR to add support!
 #endif
